@@ -73,6 +73,7 @@ pub mod project_intel;
 pub mod proxy_config;
 pub mod pushover;
 pub mod reaction;
+pub mod activate_skill;
 pub mod read_skill;
 pub mod report_templates;
 pub mod schedule;
@@ -148,6 +149,7 @@ pub use project_intel::ProjectIntelTool;
 pub use proxy_config::ProxyConfigTool;
 pub use pushover::PushoverTool;
 pub use reaction::{ChannelMapHandle, ReactionTool};
+pub use activate_skill::ActivateSkillTool;
 pub use read_skill::ReadSkillTool;
 pub use schedule::ScheduleTool;
 #[allow(unused_imports)]
@@ -376,6 +378,13 @@ pub fn all_tools_with_runtime(
         root_config.skills.prompt_injection_mode,
         crate::config::SkillsPromptInjectionMode::Compact
     ) {
+        // activate_skill: primary tool for Gemini-compatible skill activation
+        tool_arcs.push(Arc::new(ActivateSkillTool::new(
+            workspace_dir.to_path_buf(),
+            root_config.skills.open_skills_enabled,
+            root_config.skills.open_skills_dir.clone(),
+        )));
+        // read_skill: kept for backward compatibility
         tool_arcs.push(Arc::new(ReadSkillTool::new(
             workspace_dir.to_path_buf(),
             root_config.skills.open_skills_enabled,

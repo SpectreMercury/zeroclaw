@@ -706,9 +706,10 @@ pub fn skills_to_prompt_with_mode(
         ),
         crate::config::SkillsPromptInjectionMode::Compact => String::from(
             "## Available Skills\n\n\
-             Skill summaries are preloaded below to keep context compact.\n\
-             Skill instructions are loaded on demand: call `read_skill(name)` with the skill's `<name>` when you need the full skill file.\n\
-             The `location` field is included for reference.\n\n\
+             Skills are listed below by name and description.\n\
+             **IMPORTANT: Before performing ANY task that matches a skill, you MUST call `activate_skill(skill_name)` first.**\n\
+             This loads the skill's complete instructions, templates, and workflow.\n\
+             Do NOT attempt the task from memory — always activate the skill first.\n\n\
              <available_skills>\n",
         ),
     };
